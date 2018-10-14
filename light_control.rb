@@ -40,7 +40,7 @@ while true
   when 1
     clear_all_lights
     RPi::GPIO.set_high light_pins[:north_green]
-    RPi::GPIO.set_high light_pins[:south_green
+    RPi::GPIO.set_high light_pins[:south_green]
     index += 1
     sleep(2)
   when 2
