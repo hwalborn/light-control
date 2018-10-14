@@ -12,8 +12,6 @@ light_pins = {
   south_red: 26,
 }
 
-
-
 # set all southbound pins
 # south_blue = 22
 # south_green = 6
@@ -22,6 +20,7 @@ light_pins = {
 
 # setup all RPi things
 RPi::GPIO.set_numbering :bcm
+RPi::GPIO.set_warnings(false)
 # set each pin as an output
 light_pins.each do |pin, value|
   RPi::GPIO.setup value, :as => :output
