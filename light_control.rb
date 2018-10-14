@@ -27,6 +27,12 @@ light_pins.each do |pin, value|
   RPi::GPIO.setup value, :as => :output
 end
 
+def clear_all_lights
+  light_pins.each do |pin, value|
+    RPi::GPIO.set_low value
+  end
+end
+
 index = 0
 
 while true
@@ -55,11 +61,5 @@ while true
     RPi::GPIO.set_high light_pins[:south_red]
     index = 0
     sleep(2)
-  end
-end
-
-def clear_all_lights
-  light_pins.each do |pin, value|
-    RPi::GPIO.set_low value
   end
 end
