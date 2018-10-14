@@ -1,26 +1,65 @@
 require 'rpi_gpio'
 
 # set all northbound pins
-north_blue = 23
-north_green = 12
-north_yellow = 16
-north_red = 20
+light_pins = {
+  north_red: 20,
+  north_yellow: 16,
+  north_green: 12,
+  north_blue: 23,
+  south_blue: 22,
+  south_green: 6,
+  south_yellow: 13,
+  south_red: 26,
+}
+
+
 
 # set all southbound pins
-south_blue = 22
-south_green = 6
-south_yellow = 13
-south_red = 26
+# south_blue = 22
+# south_green = 6
+# south_yellow = 13
+# south_red = 26
 
 # setup all RPi things
 RPi::GPIO.set_numbering :bcm
-# set all northbound pins as outputs
-RPi::GPIO.setup north_blue, :as => :output
-RPi::GPIO.setup north_green, :as => :output
-RPi::GPIO.setup north_yellow, :as => :output
-RPi::GPIO.setup north_red, :as => :output
-# set all southbound pins as outputs
-RPi::GPIO.setup south_blue, :as => :output
-RPi::GPIO.setup south_green, :as => :output
-RPi::GPIO.setup south_yellow, :as => :output
-RPi::GPIO.setup south_red, :as => :output
+# set each pin as an output
+light_pins.each do |pin, value|
+  RPi::GPIO.setup value, :as => :output
+end
+
+index = 0
+
+while true
+  case index
+  when 0
+    clear_all_lights
+    RPi::GPIO.set_high light_pins[:north_blue]
+    RPi::GPIO.set_high light_pins[:south_blue]
+    index += 1
+    sleep(2)
+  when 1
+    clear_all_lights
+    RPi::GPIO.set_high light_pins[:north_green]
+    RPi::GPIO.set_high light_pins[:south_green
+    index += 1
+    sleep(2)
+  when 2
+    clear_all_lights
+    RPi::GPIO.set_high light_pins[:north_yellow]
+    RPi::GPIO.set_high light_pins[:south_yellow]
+    index += 1
+    sleep(2)
+  when 3
+    clear_all_lights
+    RPi::GPIO.set_high light_pins[:north_red]
+    RPi::GPIO.set_high light_pins[:south_red]
+    index = 0
+    sleep(2)
+  end
+end
+
+def clear_all_lights
+  light_pins.each do |pin, value|
+    RPi::GPIO.set_low value
+  end
+end
